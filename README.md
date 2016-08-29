@@ -18,38 +18,47 @@ In addition, you also need to configure the **templates** you want to use.
 You must provide at least a plain-text version for each template. The html versions are optional.
 
 ```js
-  ...otherOptions,
-  emailAdapter: {
-    module: 'parse-server-amazon-ses-email-adapter',
-    options: {
-      // The address that your emails come from
-      fromAddress: 'Your Name <noreply@supercoolapp.com>'',
-      accessKeyId: 'Your AWS IAM Access Key ID',
-      secretAccessKey: 'Your AWS IAM Secret Access Key',
-      region: 'Your AWS Region',
-      // The template section
-    ***REMOVED***
-    ***REMOVED***
-    ***REMOVED***
-          pathPlainText: resolve(__dirname, 'path/to/templates/password_reset_email.txt'),
-          pathHtml: resolve(__dirname, 'path/to/templates/password_reset_email.html'),
-          callback: (user) => { return { firstName: user.get('firstName') }}
+//...otherOptions,
+emailAdapter: {
+  module: 'parse-server-amazon-ses-email-adapter',
+  options: {
+    // The address that your emails come from
+    fromAddress: 'Your Name <noreply@supercoolapp.com>',
+    accessKeyId: 'Your AWS IAM Access Key ID',
+    secretAccessKey: 'Your AWS IAM Secret Access Key',
+    region: 'Your AWS Region',
+    // The template section
+  ***REMOVED***
+  ***REMOVED***
+  ***REMOVED***
+        pathPlainText: resolve(__dirname, 'path/to/templates/password_reset_email.txt'),
+        pathHtml: resolve(__dirname, 'path/to/templates/password_reset_email.html'),
+        callback: (user) => {
+            return {
+              firstName: user.get('firstName')
+        ***REMOVED***
+      ***REMOVED***
           // Now you can use {{firstName}} in your templates
-    ***REMOVED***,
-    ***REMOVED***
-    ***REMOVED***
-          pathPlainText: resolve(__dirname, 'path/to/templates/verification_email.txt'),
-          pathHtml: resolve(__dirname, 'path/to/templates/verification_email.html'),
-          callback: (user) => { return { firstName: user.get('firstName') }}
+  ***REMOVED***,
+  ***REMOVED***
+  ***REMOVED***
+        pathPlainText: resolve(__dirname, 'path/to/templates/verification_email.txt'),
+        pathHtml: resolve(__dirname, 'path/to/templates/verification_email.html'),
+        callback: (user) => {
+            return {
+              firstName: user.get('firstName')
+        ***REMOVED***
+      ***REMOVED***
           // Now you can use {{firstName}} in your templates
-    ***REMOVED***,
-        customEmailAlert: {
-          subject: 'Urgent notification!',
-          pathPlainText: resolve(__dirname, 'path/to/templates/custom_alert.txt'),
-          pathHtml: resolve(__dirname, 'path/to/templates/custom_alert.html'),
-    ***REMOVED***
- ***REMOVED***
+  ***REMOVED***,
+      customEmailAlert: {
+        subject: 'Urgent notification!',
+        pathPlainText: resolve(__dirname, 'path/to/templates/custom_alert.txt'),
+        pathHtml: resolve(__dirname, 'path/to/templates/custom_alert.html'),
+  ***REMOVED***
 ***REMOVED***
+***REMOVED***
+}
 ```
 
 
