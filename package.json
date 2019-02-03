@@ -1,6 +1,6 @@
 {
-  "name": "parse-server-amazon-ses-email-adapter",
-  "version": "1.0.0",
+  "name": "parse-server-amazon-ses-email-adapter-forked",
+  "version": "1.0.1",
   "description": "Send parse-server template emails with Amazon SES. Based off parse-server-mailgun.",
   "main": "./lib/AmazonSESAdapter.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "email",
     "adapter"
   ],
-  "author": "Dan Nyanko <nyanko@ecohealthalliance.org>",
+  "author": "Ziv Chen",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/ecohealthalliance/parse-server-amazon-ses-email-adapter/issues"
