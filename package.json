@@ -1,6 +1,6 @@
 {
   "name": "parse-server-amazon-ses-email-adapter-forked",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Send parse-server template emails with Amazon SES. Based off parse-server-mailgun.",
   "main": "./lib/AmazonSESAdapter.js",
   "scripts": {
@@ -27,18 +27,18 @@
 ***REMOVED***,
   "homepage": "https://github.com/ecohealthalliance/parse-server-amazon-ses-email-adapter#readme",
   "dependencies": {
-    "parse-server": "^2.2.16",
     "amazon-ses-mailer": "^0.2.0",
     "co": "^4.6.0",
-    "lodash.template": "^4.3.0"
+    "lodash.template": "^4.3.0",
+    "parse-server": "^3.9.0"
 ***REMOVED***,
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
     "babel-polyfill": "^6.9.1",
     "babel-preset-es2015-node": "^6.1.1",
-    "chai": "^3.5.0",
-    "mocha": "^2.5.3",
-    "sinon": "^1.17.4"
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "sinon": "^7.5.0"
 ***REMOVED***
 }
