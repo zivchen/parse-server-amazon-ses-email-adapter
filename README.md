@@ -28,36 +28,36 @@ emailAdapter: {
     secretAccessKey: 'Your AWS IAM Secret Access Key',
     region: 'Your AWS Region',
     // The template section
-  ***REMOVED***
-  ***REMOVED***
-  ***REMOVED***
+    templates: {
+      passwordResetEmail: {
+        subject: 'Reset your password',
         pathPlainText: resolve(__dirname, 'path/to/templates/password_reset_email.txt'),
         pathHtml: resolve(__dirname, 'path/to/templates/password_reset_email.html'),
         callback: (user) => {
             return {
               firstName: user.get('firstName')
-        ***REMOVED***
-      ***REMOVED***
+            }
+          }
           // Now you can use {{firstName}} in your templates
-  ***REMOVED***,
-  ***REMOVED***
-  ***REMOVED***
+      },
+      verificationEmail: {
+        subject: 'Confirm your account',
         pathPlainText: resolve(__dirname, 'path/to/templates/verification_email.txt'),
         pathHtml: resolve(__dirname, 'path/to/templates/verification_email.html'),
         callback: (user) => {
             return {
               firstName: user.get('firstName')
-        ***REMOVED***
-      ***REMOVED***
+            }
+          }
           // Now you can use {{firstName}} in your templates
-  ***REMOVED***,
+      },
       customEmailAlert: {
         subject: 'Urgent notification!',
         pathPlainText: resolve(__dirname, 'path/to/templates/custom_alert.txt'),
         pathHtml: resolve(__dirname, 'path/to/templates/custom_alert.html'),
-  ***REMOVED***
-***REMOVED***
-***REMOVED***
+      }
+    }
+  }
 }
 ```
 
@@ -83,7 +83,7 @@ AmazonSESAdapter.send({
   fromAddress: 'Alerts <noreply@yourapp.com>',
   recipient: 'user@email.com',
   variables: { alert: 'New posts' } // {{alert}} will be compiled to 'New posts'
-***REMOVED***
+});
 ```
 
 

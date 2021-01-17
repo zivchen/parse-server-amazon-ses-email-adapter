@@ -21,11 +21,11 @@ class AmazonSESAdapter extends MailAdapter {
       throw new Error(
         "AmazonSESAdapter requires valid fromAddress, accessKeyId, secretAccessKey, region."
       );
-***REMOVED***
+    }
 
     const { templates = {} } = options;
     ["passwordResetEmail", "verificationEmail"].forEach((key) => {
-      const { subject, pathPlainText, callback } = templates[key] || {***REMOVED***
+      const { subject, pathPlainText, callback } = templates[key] || {};
       if (typeof subject !== "string" || typeof pathPlainText !== "string")
         throw new Error(
           "AmazonSESAdapter templates are not properly configured."
@@ -35,13 +35,13 @@ class AmazonSESAdapter extends MailAdapter {
         throw new Error(
           "AmazonSESAdapter template callback is not a function."
         );
-***REMOVED***);
-    // AWS.config.update({ region ***REMOVED***
+    });
+    // AWS.config.update({ region });
     // this.ses = new AmazonSES(accessKeyId, secretAccessKey, region);
     this.ses = new AWS.SES({accessKeyId, secretAccessKey, region}) 
     this.fromAddress = fromAddress;
     this.templates = templates;
-***REMOVED***
+  }
 
   /**
    * Method to send emails via AmazonSESAdapter
@@ -63,12 +63,12 @@ class AmazonSESAdapter extends MailAdapter {
 
     if (options.templateName) {
       const {
-***REMOVED***
+        templateName,
         subject,
-***REMOVED***
-***REMOVED***
-***REMOVED***,
-  ***REMOVED*** = options;
+        fromAddress,
+        recipient,
+        variables,
+      } = options;
       let template = this.templates[templateName];
 
       if (!template)
@@ -91,41 +91,41 @@ class AmazonSESAdapter extends MailAdapter {
         from: fromAddress || this.fromAddress,
         to: recipient,
         subject: subject || template.subject,
-  ***REMOVED***;
-***REMOVED*** else {
+      };
+    } else {
       const { link, appName, user, templateConfig } = options;
       const { callback } = templateConfig;
       let userVars;
 
       if (callback && typeof callback === "function") {
-***REMOVED***Vars = callback(user);
+        userVars = callback(user);
         // If custom user variables are not packaged in an object, ignore it
         const validUserVars =
-  ***REMOVED***Vars &&
-  ***REMOVED***Vars.constructor &&
-  ***REMOVED***Vars.constructor.name === "Object";
-***REMOVED***Vars = validUserVars ? userVars : {***REMOVED***
-  ***REMOVED***
+          userVars &&
+          userVars.constructor &&
+          userVars.constructor.name === "Object";
+        userVars = validUserVars ? userVars : {};
+      }
 
       pathPlainText = templateConfig.pathPlainText;
       pathHtml = templateConfig.pathHtml;
 
       templateVars = Object.assign(
         {
-  ***REMOVED***
-  ***REMOVED***
-  ***REMOVED***name: user.get("username"),
+          link,
+          appName,
+          username: user.get("username"),
           email: user.get("email"),
-    ***REMOVED***,
-***REMOVED***Vars
+        },
+        userVars
       );
 
       message = {
         from: this.fromAddress,
         to: user.get("email"),
         subject: templateConfig.subject,
-  ***REMOVED***;
-***REMOVED***
+      };
+    }
 
     return co(function*() {
       let plainTextEmail, htmlEmail, compiled;
@@ -137,7 +137,7 @@ class AmazonSESAdapter extends MailAdapter {
       // Compile plain-text template
       compiled = template(plainTextEmail, {
         interpolate: /{{([\s\S]+?)}}/g,
-  ***REMOVED***);
+      });
       // Add processed text to the message object
       message.text = compiled(templateVars);
 
@@ -147,10 +147,10 @@ class AmazonSESAdapter extends MailAdapter {
         // Compile html template
         compiled = template(htmlEmail, {
           interpolate: /{{([\s\S]+?)}}/g,
-    ***REMOVED***);
+        });
         // Add processed HTML to the message object
         message.html = compiled(templateVars);
-  ***REMOVED***
+      }
 
       // return {
       //   from: message.from,
@@ -159,7 +159,7 @@ class AmazonSESAdapter extends MailAdapter {
       //   body: {
       //     text: message.text,
       //     html: message.html,
-      // ***REMOVED***,
+      //   },
       return {
         Source: message.from,
         Destination: {
@@ -168,7 +168,7 @@ class AmazonSESAdapter extends MailAdapter {
             /* more items */
           ],
           ToAddresses:[message.to],
-    ***REMOVED***,
+        },
         Message: {
           /* required */
           Body: {
@@ -176,33 +176,33 @@ class AmazonSESAdapter extends MailAdapter {
             Html: {
               Charset: "UTF-8",
               Data: message.html,
-        ***REMOVED***,
+            },
             Text: {
               Charset: "UTF-8",
               Data: message.text,
-        ***REMOVED***,
-      ***REMOVED***,
+            },
+          },
           Subject: {
             Charset: "UTF-8",
             Data: message.subject,
-      ***REMOVED***,
-    ***REMOVED***,
-  ***REMOVED***;
-***REMOVED***).then(
+          },
+        },
+      };
+    }).then(
       (payload) => {
         return new Promise((resolve, reject) => {
           // console.log("payload",payload)
           this.ses.sendEmail(payload, (error, data) => {
             if (error) reject(error);
             resolve(data);
-      ***REMOVED***);
-    ***REMOVED***);
-  ***REMOVED***,
+          });
+        });
+      },
       (error) => {
         console.error(error);
-  ***REMOVED***
+      }
     );
-***REMOVED***
+  }
 
   /**
    * _sendMail wrapper to send an email with password reset link
@@ -218,8 +218,8 @@ class AmazonSESAdapter extends MailAdapter {
       appName,
       user,
       templateConfig: this.templates.passwordResetEmail,
-***REMOVED***);
-***REMOVED***
+    });
+  }
 
   /**
    * _sendMail wrapper to send an email with an account verification link
@@ -235,8 +235,8 @@ class AmazonSESAdapter extends MailAdapter {
       appName,
       user,
       templateConfig: this.templates.verificationEmail,
-***REMOVED***);
-***REMOVED***
+    });
+  }
 
   /**
    * _sendMail wrapper to send general purpose emails
@@ -257,8 +257,8 @@ class AmazonSESAdapter extends MailAdapter {
       fromAddress,
       recipient,
       variables,
-***REMOVED***);
-***REMOVED***
+    });
+  }
 
   /**
    * Simple Promise wrapper to asynchronously fetch the contents of a template.
@@ -270,9 +270,9 @@ class AmazonSESAdapter extends MailAdapter {
       fs.readFile(path, (err, data) => {
         if (err) reject(err);
         resolve(data);
-  ***REMOVED***);
-***REMOVED***);
-***REMOVED***
+      });
+    });
+  }
 }
 
 module.exports = AmazonSESAdapter;
