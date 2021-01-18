@@ -221,7 +221,7 @@ describe('AmazonSESAdapter', () => {
     it('should invoke #_sendMail() with the correct arguments', () => {
       const adapter = new AmazonSESAdapter(config);
       const link = 'http://password-reset-link';
-      const appName = 'Edocate';
+      const appName = 'mail';
       const templateConfig = adapter.templates.passwordResetEmail;
 
       const options = {
@@ -258,7 +258,7 @@ describe('AmazonSESAdapter', () => {
     it('should invoke #_sendMail() with the correct arguments', () => {
       const adapter = new AmazonSESAdapter(config);
       const link = 'http://verify-account-link';
-      const appName = 'Edocate';
+      const appName = 'mail';
       const templateConfig = adapter.templates.verificationEmail;
 
       const options = {
@@ -295,9 +295,9 @@ describe('AmazonSESAdapter', () => {
       const adapter = new AmazonSESAdapter(config);
       const templateName = 'customEmail';
       const fromAddress = config.fromAddress;
-      const recipient = 'ziv@edocate.com'
+      const recipient = 'xxx@mail.com'
       const variables = {
-        appName: 'Edocate'
+        appName: 'mail'
       };
       const options = {
         templateName,
